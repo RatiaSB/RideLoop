@@ -2,6 +2,8 @@ package za.co.rideloop.Domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 import java.util.Date;
 import java.util.Objects;
@@ -22,7 +24,10 @@ public class CarSupplier {
     private int supplierID;
     private String name;
     private String contactPerson;
+
+    @Temporal(TemporalType.DATE)
     private Date supplyDate;
+
     private String contractStatus;
 
     /**
