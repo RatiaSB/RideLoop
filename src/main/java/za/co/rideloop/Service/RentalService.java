@@ -2,6 +2,8 @@ package za.co.rideloop.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import za.co.rideloop.Domain.Invoice;
+import za.co.rideloop.Domain.Payment;
 import za.co.rideloop.Domain.Rental;
 import za.co.rideloop.Repository.RentalRepository;
 import za.co.rideloop.Util.Helper;
@@ -24,14 +26,15 @@ public class RentalService {
     private RentalRepository repository;
 
     // ===== Create =====
-    public Rental createRental(Rental rental) {
+    public Rental create(Rental rental) {
+
         if (rental == null ||
-              //  !Helper.isValidId(rental.getRentalID()) ||
-            //    !Helper.isValidId(rental.getCustomerID()) ||
-            //    !Helper.isValidId(rental.getCarID()) ||
+                //  !Helper.isValidId(rental.getRentalID()) ||
+                //    !Helper.isValidId(rental.getCustomerID()) ||
+                //    !Helper.isValidId(rental.getCarID()) ||
                 rental.getStartDate() == null ||
                 rental.getEndDate() == null ||
-             //   !Helper.isValidDateRange(rental.getStartDate(), rental.getEndDate()) ||
+                //   !Helper.isValidDateRange(rental.getStartDate(), rental.getEndDate()) ||
                 Helper.isNullOrEmpty(rental.getPickupLocation()) ||
                 Helper.isNullOrEmpty(rental.getDropoffLocation()) ||
                 !Helper.isValidAmount(rental.getTotalCost()) ||
@@ -40,16 +43,17 @@ public class RentalService {
         }
         return this.repository.save(rental);
     }
+    // ===== Create =====
 
-    // ===== Read =====
-    public Rental readRental(Integer id) {
-        return this.repository.findById(id).orElse(null);
+    public Rental read(Integer id) {
+        return repository.findById(id).orElse(null);
     }
 
-    // ===== Update =====
-    // In RentalService.java
 
-    public Rental updateRental(Rental rental) {
+    // ===== Update =====
+
+
+    public Rental update(Rental rental) {
         // 1. Check if the input rental object is null or has no ID.
         if (rental == null || rental.getRentalID() == 0) {
             return null;
@@ -81,60 +85,21 @@ public class RentalService {
             return null;
         }
     }
-//    public Rental updateRental(Rental rental) {
-//        Rental existingRental = repository.findById(rental.getRentalID()).orElse(null);
-//        if (existingRental != null) {
-//
-//            return repository.save(existingRental);
-//        } else {
-//            return  null;
-//        }
-//    }
-//    public Rental updateRental(Rental rental) {
-//        if (rental == null || rental.getRentalID() == null ||
-//                !repository.existsById(rental.getRentalID())) {
-//            return null;
-//        }
-//        return repository.save(rental);
-//    }
-//    public Rental updateRental(Rental rental) {
-//        if (rental.getRentalID() == null || !repository.existsById(rental.getRentalID())) {
-//            return null; // No update if it doesn't exist
-//        }
-//        return repository.save(rental);
-//    }
 
-
-//    public Rental updateRental(Rental rental) {
-////        if (rental == null ||
-////            //    !Helper.isValidId(rental.getRentalID()) ||
-////            //    !Helper.isValidId(rental.getCustomerID()) ||
-////            //    !Helper.isValidId(rental.getCarID()) ||
-////                rental.getStartDate() == null ||
-////                rental.getEndDate() == null ||
-////              //  !Helper.isValidDateRange(rental.getStartDate(), rental.getEndDate()) ||
-////                Helper.isNullOrEmpty(rental.getPickupLocation()) ||
-////                Helper.isNullOrEmpty(rental.getDropoffLocation()) ||
-////                !Helper.isValidAmount(rental.getTotalCost()) ||
-////                Helper.isNullOrEmpty(rental.getStatus()))
-////        {
-////            return null;
-////        }
-////        return this.repository.save(rental);
-//    }
-
-    // ===== Delete =====
-    public void deleteRental(Integer id) {
-        this.repository.deleteById(id);
-    }
 
     // ===== Get All =====
-    public List<Rental> getAllRentals() {
+
+    public List<Rental> getAll() {
         return this.repository.findAll();
     }
+    // ===== Delete =====
 
+    public void delete(int id) {
+        this.repository.deleteById(id);
+    }
     // ===== Find by Status =====
     public List<Rental> getRentalsByStatus(String status) {
         return this.repository.findByStatus(status);
     }
+
 }
